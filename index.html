@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draughtman's Studio | Architecture & Design</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* --- 1. VARIABLES & RESET --- */
+        :root {
+            --bg-color: #F2F2F0;
+            --text-main: #1A1A1A;
+            --text-muted: #555555;
+            --accent: #4A5A54;
+            --white: #FFFFFF;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Manrope', sans-serif;
+            --container-width: 1400px;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img { width: 100%; display: block; object-fit: cover; }
+
+        /* --- UI COMPONENTS --- */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            background-color: transparent;
+            border: 1px solid var(--text-main);
+            color: var(--text-main);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: var(--text-main);
+            color: var(--white);
+            transform: scale(1.05);
+        }
+
+        .btn-filled {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-filled:hover {
+            background-color: var(--text-main);
+            border-color: var(--text-main);
+        }
+
+        .section-padding { padding: 100px 0; }
+
+        /* --- 2. HEADER --- */
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 30px 0;
+            color: var(--white);
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            font-style: italic;
+            z-index: 1001; 
+            position: relative;
+        }
+
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-size: 0.9rem; opacity: 0.8; }
+        .nav-links a:hover { opacity: 1; text-decoration: underline; }
+
+        .menu-btn { 
+            display: none; 
+            font-size: 1.5rem; 
+            cursor: pointer; 
+            position: relative;
+        }
+
+        /* --- MOBILE MENU OVERLAY --- */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--white);
+            z-index: 2000; /* Highest Z-Index */
+            transform: translateY(-100%);
+            transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+            display: flex;
+            flex-direction: column;
+            padding: 100px 40px;
+        }
+
+        .mobile-menu-overlay.active {
+            transform: translateY(0);
+        }
+
+        .mobile-menu-overlay a {
+            font-family: var(--font-sans);
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 25px;
+            display: block;
+            width: 100%;
+            text-align: left;
+            border-bottom: 1px solid #818181
+        }
+        
+       .hero-img {
+           position: absolute;
+           top: 0
+           left: 0
+           object-fit:cover;
+           height: 100%;
+       }
+        
+        .mobile-menu-overlay a:hover {
+            color: var(--accent);
+            padding-left: 10px;
+        }
+
+        /* CLOSE BUTTON INSIDE OVERLAY */
+        .overlay-close-btn {
+            position: absolute;
+            top: 30px; /* Matches Header Padding */
+            right: 20px; /* Matches Container Padding */
+            font-size: 1.8rem;
+            color: var(--text-main);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- 3. HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+            padding-bottom: 0;
+        }
+        .hero-img {
+           position: absolute;
+           top: 0
+           left: 0
+           object-fit:cover;
+           height: 100%;
+           z-index: -2
+       }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: -1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: var(--white);
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .hero h1 { font-size: 4rem; margin-bottom: 20px; }
+        .hero p { font-size: 1.1rem; margin-bottom: 30px; margin-left: auto; margin-right: auto; max-width: 500px; }
+        
+        .hero .btn { border-color: var(--white); color: var(--white); }
+        .hero .btn:hover { background: var(--white); color: var(--text-main); }
+
+        /* --- 4. INTRO SECTION --- */
+        .intro { text-align: center; }
+        .intro-text { max-width: 700px; margin: 0 auto 60px; }
+        .intro-text h2 { font-size: 2.5rem; margin-bottom: 20px; }
+        .intro-text p { color: var(--text-muted); }
+
+        .intro-card {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .intro-card img { height: 100%; width: 100%; transition: transform 0.6s; }
+        .intro-card:hover img { transform: scale(1.05); }
+        
+        .card-overlay {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(255,255,255,0.9);
+            padding: 20px 40px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* --- 5. SERVICES CAROUSEL --- */
+        .services { background-color: #EBEBE9; position: relative; }
+        
+        .services-header {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .service-tab {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: #999;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .service-tab:hover, .service-tab.active {
+            color: var(--text-main);
+        }
+
+        .service-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 100%;
+            height: 2px;
+            background: var(--text-main);
+        }
+
+        .carousel-viewport {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            height: 600px;
+        }
+
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .service-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .service-slide img {
+            height: 100%;
+            width: 100%;
+        }
+
+        .service-info {
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+            background: var(--white);
+            padding: 60px;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .service-info h3 { font-size: 2rem; margin-bottom: 20px; }
+        .service-info p { color: var(--text-muted); margin-bottom: 30px; }
+
+        /* --- 6. PROJECTS --- */
+        .projects-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 50px;
+        }
+
+        .projects-header h2 { font-size: 3rem; }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 30px;
+            grid-auto-rows: 400px;
+        }
+
+        .project-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .project-item img {
+            height: 100%;
+            width: 100%;
+            transition: transform 0.5s;
+        }
+
+        .project-item:hover img { transform: scale(1.1); }
+
+        .project-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            color: var(--white);
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .project-item:hover .project-info { opacity: 1; }
+
+        .p1 { grid-column: span 8; }
+        .p2 { grid-column: span 4; }
+        .p3 { grid-column: span 4; }
+        .p4 { grid-column: span 8; }
+
+        /* --- 7. TESTIMONIALS (Fixed Squish) --- */
+        .testimonials { background: var(--white); }
+        
+        .testi-header { text-align: center; margin-bottom: 60px; }
+        .testi-header h2 { font-size: 2.5rem; }
+
+        .testi-wrapper {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .testi-track {
+            display: flex;
+            /* No CSS transition here, handled in JS to prevent jumps */
+        }
+
+        .testi-card {
+            /* Fix Squish: flex-shrink 0 ensures it doesn't shrink to fit container */
+            flex-shrink: 0; 
+            box-sizing: border-box;
+            padding: 20px;
+        }
+
+        .testi-content {
+            background: var(--bg-color);
+            padding: 40px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .testi-header-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .testi-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 4px; 
+            margin-right: 20px;
+        }
+
+        .testi-quote {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            flex-grow: 1;
+            /* Fix Squish: Ensure text wraps */
+            white-space: normal; 
+        }
+
+        .testi-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid var(--text-main);
+            background: transparent;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover { background: var(--text-main); color: var(--white); }
+
+        /* --- 8. FAQ (Rotated Button) --- */
+        .faq-item {
+            border-bottom: 1px solid #ddd;
+            padding: 20px 0;
+        }
+        
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .faq-question:hover { color: var(--accent); }
+
+        /* Rotate Animation */
+        .faq-question i {
+            transition: transform 0.4s ease;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            padding-right: 20px;
+        }
+
+        .faq-answer p {
+            margin-top: 15px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .faq-item.active .faq-question { color: var(--accent); }
+
+        /* --- 9. CONTACT SECTION (New) --- */
+        .contact-section { background-color: var(--white); }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .contact-info h2 { font-size: 3rem; margin-bottom: 30px; }
+        .contact-info p { margin-bottom: 40px; color: var(--text-muted); max-width: 400px; }
+        
+        .contact-details div { margin-bottom: 20px; }
+        .contact-details h4 { font-size: 1.1rem; margin-bottom: 5px; }
+        .contact-details span { color: var(--text-muted); }
+
+        .contact-form form { display: flex; flex-direction: column; gap: 20px; }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background: #FAFAFA;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+        }
+        .form-group textarea { height: 150px; resize: none; }
+        .form-group input:focus, .form-group textarea:focus { outline: 1px solid var(--text-main); }
+
+        /* --- 10. FOOTER --- */
+        footer {
+            background: #111;
+            color: #fff;
+            padding: 80px 0 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-col h3 { font-family: var(--font-serif); margin-bottom: 20px; color: #fff; }
+        .footer-col ul li { margin-bottom: 10px; color: #888; }
+        .footer-col ul li a:hover { color: #fff; }
+
+        .copyright {
+            border-top: 1px solid #333;
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 3rem; }
+            .service-info { left: 5%; width: 90%; }
+            .projects-grid { grid-template-columns: repeat(2, 1fr); }
+            .p1, .p2, .p3, .p4 { grid-column: span 1; }
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .menu-btn { display: block; }
+            
+            .hero { align-items: center; justify-content: center; text-align: center; }
+            .hero-content { padding: 0 20px; }
+            
+            .projects-header { 
+                flex-direction: column; 
+                align-items: flex-start; 
+                gap: 20px; 
+            }
+            .projects-header h2 { font-size: 2.5rem; }
+
+            .projects-grid {
+                grid-template-columns: 1fr; 
+                margin-left: -20px; 
+                margin-right: -20px;
+                width: calc(100% + 40px);
+                gap: 0; 
+            }
+            .project-item { width: 100%; }
+            
+            .service-info { 
+                position: relative; 
+                transform: none; 
+                top: 0; left: 0; 
+                width: 100%; 
+                margin-top: -50px; 
+            }
+            
+            .intro-card {
+                margin-left: -20px;
+                margin-right: -20px;
+                width: calc(100% + 40px);
+                border-radius: 0;
+            }
+
+            .footer-grid { grid-template-columns: 1fr; }
+            .service-tab { font-size: 1.2rem; }
+
+            .testi-card { 
+                width: 100% !important; /* Force full width on mobile */
+                min-width: 100%; 
+            } 
+            
+            /* Close button alignment fix for different screen widths */
+            .overlay-close-btn {
+                right: 20px; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div class="overlay-close-btn" onclick="toggleMenu()">
+            <i class="fas fa-times"></i>
+        </div>
+
+        <a href="#about" onclick="toggleMenu()">Studio</a>
+        <a href="#services" onclick="toggleMenu()">Expertise</a>
+        <a href="#projects" onclick="toggleMenu()">Projects</a>
+        <a href="#testimonials" onclick="toggleMenu()">Insights</a>
+        <a href="#contact" onclick="toggleMenu()">Contact</a>
+    </div>
+
+    <header>
+        <div class="container nav-wrapper">
+            <div class="logo">Draughtman's Studio.</div>
+            <nav class="nav-links">
+                <a href="#about">Studio</a>
+                <a href="#services">Expertise</a>
+                <a href="#projects">Projects</a>
+                <a href="#testimonials">Insights</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div class="menu-btn" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <img src="images/hero.jpg" class="hero-img"alt="draughtmen planning">
+        <div class="container hero-content">
+            <h1>Thought in Design<br>for a Refined Lifestyle</h1>
+            <p>We create spaces that honor simplicity, structure, and the environment.</p>
+            <a href="#contact" class="btn">Start a Project</a>
+        </div>
+    </section>
+
+    <section id="about" class="section-padding intro">
+        <div class="container">
+            <div class="intro-text">
+                <h2>Design Services Rooted in Simplicity & Balance</h2>
+                <p>We believe in the power of minimalism. Our architecture speaks through materials, light, and geometry, creating timeless spaces for modern living.</p>
+            </div>
+            <div class="intro-card">
+                <img 
+                    src="images/display.jpg"
+                    alt="Minimalist House"
+                >
+                <div class="card-overlay">
+                    <span>Private Residence</span> | <span>Tokyo, Japan</span>
+                    <button class="btn btn-filled" style="margin-left: 20px;"><i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section-padding services">
+        <div class="container">
+            <div class="services-header">
+                <div class="service-tab active" data-index="0">Architecture</div>
+                <div class="service-tab" data-index="1">Interior Design</div>
+                <div class="service-tab" data-index="2">Urban Planning</div>
+            </div>
+
+            <div class="carousel-viewport">
+                <div class="carousel-track" id="serviceTrack">
+                    
+                    <div class="service-slide">
+                        <img 
+                            src="images/architecture.jpg"
+                            alt="Architectural Planning"
+                        >
+                        <div class="service-info">
+                            <h3>Architectural Design</h3>
+                            <p>From conceptualization to blueprints, we design structures that stand the test of time. Our approach integrates sustainability with brutalist aesthetics.</p>
+                            <a href="#contact" class="btn btn-filled">Consult Us</a>
+                        </div>
+                    </div>
+
+                    <div class="service-slide">
+                        <img 
+                            src="images/interior.jpg" alt="Interior"
+                        >
+                        <div class="service-info">
+                            <h3>Interior Spaces</h3>
+                            <p>Curating environments that breathe. We focus on natural materials, flow, and light to create interiors that promote well-being and focus.</p>
+                            <a href="#contact" class="btn btn-filled">Consult Us</a>
+                        </div>
+                    </div>
+
+                    <div class="service-slide">
+                        <img 
+                            src="images/urban.jpg" 
+
+                            alt="Urban Planning"
+                        >
+                        <div class="service-info">
+                            <h3>Urban Planning</h3>
+                            <p>Designing for the community. Our urban planning strategies prioritize human connection and environmental harmony within dense cityscapes.</p>
+                            <a href="#contact" class="btn btn-filled">Consult Us</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section-padding">
+        <div class="container">
+            <div class="projects-header">
+                <h2>Draughtman's<br>Architecture</h2>
+                <div>
+                    <span style="display:block; margin-bottom:10px; color:#777;">Latest Projects</span>
+                    <a href="#" class="btn">View All</a>
+                </div>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-item p1">
+                    <img 
+                        src="images/building1.jpg"                         alt="Project 1"
+                    >
+                    <div class="project-info">
+                        <h3>The Concrete Void</h3>
+                        <p>Residential</p>
+                    </div>
+                </div>
+                <div class="project-item p2">
+                    <img 
+                        src="images/building2.jpg"        alt="Project 2"
+                    >
+                    <div class="project-info">
+                        <h3>Glass Pavilion</h3>
+                        <p>Commercial</p>
+                    </div>
+                </div>
+                <div class="project-item p3">
+                    <img 
+                        src="images/building3.jpg" 
+                        alt="Project 3"
+                    >
+                    <div class="project-info">
+                        <h3>Nordic Retreat</h3>
+                        <p>Hospitality</p>
+                    </div>
+                </div>
+                <div class="project-item p4">
+                    <img 
+                        src="images/building4.jpg"
+                        alt="Project 4"
+                    >
+                    <div class="project-info">
+                        <h3>Apex Tower</h3>
+                        <p>Corporate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="section-padding testimonials">
+        <div class="container">
+            <div class="testi-header">
+                <h2>Insights from our<br>Architectural Walk</h2>
+            </div>
+            
+            <div class="testi-wrapper">
+                <div class="testi-track" id="testiTrack">
+                    <div class="testi-card">
+                        <div class="testi-content">
+                            <div class="testi-header-row">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200" class="testi-img" alt="User">
+                                <div>
+                                    <h4>James Howell</h4>
+                                    <small>Property Developer</small>
+                                </div>
+                            </div>
+                            <p class="testi-quote">"Draughtman's Studio completely transformed our vision. The attention to light and space is unparalleled."</p>
+                        </div>
+                    </div>
+                    <div class="testi-card">
+                        <div class="testi-content">
+                            <div class="testi-header-row">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200" class="testi-img" alt="User">
+                                <div>
+                                    <h4>Sarah Jenkins</h4>
+                                    <small>Homeowner</small>
+                                </div>
+                            </div>
+                            <p class="testi-quote">"Living in a home designed by them feels like living in a piece of art. Functional, yet incredibly beautiful."</p>
+                        </div>
+                    </div>
+                    <div class="testi-card">
+                        <div class="testi-content">
+                            <div class="testi-header-row">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200" class="testi-img" alt="User">
+                                <div>
+                                    <h4>Michael Ross</h4>
+                                    <small>City Planner</small>
+                                </div>
+                            </div>
+                            <p class="testi-quote">"Their understanding of urban integration and sustainability sets a new standard for modern architecture."</p>
+                        </div>
+                    </div>
+                    <div class="testi-card">
+                        <div class="testi-content">
+                            <div class="testi-header-row">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200" class="testi-img" alt="User">
+                                <div>
+                                    <h4>Elena Rodriguez</h4>
+                                    <small>Interior Designer</small>
+                                </div>
+                            </div>
+                            <p class="testi-quote">"A collaborative partner that respects the nuance of interior flow. A joy to work with."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testi-controls">
+                <button class="control-btn" id="prevTesti"><i class="fas fa-chevron-left"></i></button>
+                <button class="control-btn" id="nextTesti"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section-padding" style="background-color: #F9F9F9;">
+        <div class="container">
+            <h2 style="margin-bottom: 40px;">Frequently Asked<br>Questions</h2>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>How do you approach sustainability?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We prioritize passive cooling, locally sourced materials, and energy-efficient systems in all our designs to minimize environmental impact.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>What is the typical project timeline?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Timelines vary by complexity. A typical residential project takes 12-18 months from concept to completion, while commercial projects may take longer.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Do you handle interior design as well?</span>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, we offer full-service interior design to ensure a cohesive aesthetic between the exterior architecture and the internal living spaces.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Let's Build Something<br>Timeless.</h2>
+                    <p>Ready to start your project? We are currently accepting new commissions for late 2024. Reach out to discuss your vision.</p>
+                    
+                    <div class="contact-details">
+                        <div>
+                            <h4>Visit Us</h4>
+                            <span>1200 Architecture Ave, Suite 400<br>Los Angeles, CA 90012</span>
+                        </div>
+                        <div>
+                            <h4>Contact</h4>
+                            <span>hello@draughtmans.com<br>+1 (555) 019-2834</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <form action="#" method="POST">
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Tell us about your project" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-filled">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Draughtman's Studio.</h3>
+                    <p style="color: #888; max-width: 300px;">Architecture, Interiors, and Urban Design grounded in the principles of nature and geometry.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Explore</h3>
+                    <ul>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#about">Studio</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>hello@draughtmans.com</li>
+                        <li>+1 (555) 019-2834</li>
+                        <li>Los Angeles, CA</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Social</h3>
+                    <ul>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Pinterest</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <span>&copy; 2024 Draughtman's Studio. All rights reserved.</span>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- 1. SERVICES TABBED CAROUSEL ---
+        const tabs = document.querySelectorAll('.service-tab');
+        const serviceTrack = document.getElementById('serviceTrack');
+        let currentServiceIndex = 0;
+        const totalServices = tabs.length;
+        let serviceInterval;
+
+        function updateServiceCarousel(index) {
+            tabs.forEach(t => t.classList.remove('active'));
+            tabs[index].classList.add('active');
+            serviceTrack.style.transform = `translateX(-${index * 100}%)`;
+            currentServiceIndex = index;
+        }
+
+        function startServiceAutoPlay() {
+            serviceInterval = setInterval(() => {
+                let nextIndex = (currentServiceIndex + 1) % totalServices;
+                updateServiceCarousel(nextIndex);
+            }, 5000);
+        }
+
+        tabs.forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+                clearInterval(serviceInterval);
+                updateServiceCarousel(index);
+                startServiceAutoPlay();
+            });
+        });
+
+        startServiceAutoPlay();
+
+        // --- 2. TESTIMONIALS (Seamless Infinite Loop with Width Fix) ---
+        const testiTrack = document.getElementById('testiTrack');
+        const prevBtn = document.getElementById('prevTesti');
+        const nextBtn = document.getElementById('nextTesti');
+        
+        // Cloning for infinite loop
+        const originalCards = document.querySelectorAll('.testi-card');
+        const totalOriginal = originalCards.length;
+        
+        // Clone 2 at start and 2 at end
+        const firstClone = originalCards[0].cloneNode(true);
+        const secondClone = originalCards[1].cloneNode(true);
+        const lastClone = originalCards[totalOriginal - 1].cloneNode(true);
+        const secondLastClone = originalCards[totalOriginal - 2].cloneNode(true);
+
+        testiTrack.append(firstClone);
+        testiTrack.append(secondClone); 
+        testiTrack.prepend(lastClone);
+        testiTrack.prepend(secondLastClone);
+
+        const allCards = document.querySelectorAll('.testi-card');
+        let testiIndex = 2; // Start at first real item
+        let cardWidth;
+        
+        function getItemsPerView() {
+            return window.innerWidth > 1024 ? 2 : 1;
+        }
+
+        function updateDimensions() {
+            const itemsView = getItemsPerView();
+            cardWidth = 100 / itemsView;
+            
+            // Explicitly set width to prevent squishing
+            allCards.forEach(card => {
+                card.style.width = `${cardWidth}%`;
+                // Ensure flex-shrink is 0 (handled in CSS too, but double safe)
+                card.style.flex = `0 0 ${cardWidth}%`;
+            });
+
+            testiTrack.style.transition = 'none';
+            testiTrack.style.transform = `translateX(-${testiIndex * cardWidth}%)`;
+        }
+
+        function slideTestimonial(direction) {
+            testiTrack.style.transition = 'transform 0.5s ease-in-out';
+            if (direction === 'next') {
+                testiIndex++;
+            } else {
+                testiIndex--;
+            }
+            testiTrack.style.transform = `translateX(-${testiIndex * cardWidth}%)`;
+        }
+
+        testiTrack.addEventListener('transitionend', () => {
+            // Instant Jump Logic
+            if (testiIndex >= allCards.length - 2) {
+                testiTrack.style.transition = 'none';
+                testiIndex = 2;
+                testiTrack.style.transform = `translateX(-${testiIndex * cardWidth}%)`;
+            }
+            if (testiIndex <= 1) {
+                testiTrack.style.transition = 'none';
+                testiIndex = allCards.length - 3;
+                testiTrack.style.transform = `translateX(-${testiIndex * cardWidth}%)`;
+            }
+        });
+
+        nextBtn.addEventListener('click', () => slideTestimonial('next'));
+        prevBtn.addEventListener('click', () => slideTestimonial('prev'));
+
+        updateDimensions();
+        window.addEventListener('resize', updateDimensions);
+
+        // --- 3. FAQ DROPDOWN & ROTATION ---
+        function toggleFaq(element) {
+            element.classList.toggle('active');
+            
+            const answer = element.querySelector('.faq-answer');
+            if (element.classList.contains('active')) {
+                answer.style.maxHeight = answer.scrollHeight + "px";
+                // No class replacement here, handled by CSS rotation
+            } else {
+                answer.style.maxHeight = 0;
+            }
+        }
+
+        // --- 4. MOBILE MENU (Close button inside overlay) ---
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+            // We no longer transform the header icon, as the overlay has its own close button
+        }
+    </script>
+</body>
+</html>
